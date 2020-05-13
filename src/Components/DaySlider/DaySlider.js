@@ -49,7 +49,7 @@ class DaySlider extends React.Component {
                 </Typography>
                 <Slider
                     className={classes.slider}
-                    defaultValue={numberOfDays}
+                    value={numberOfDays}
                     getAriaValueText={valuetext}
                     aria-labelledby="discrete-slider"
                     valueLabelDisplay="on"
