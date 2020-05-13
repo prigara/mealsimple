@@ -33,10 +33,9 @@ class App extends React.Component {
                 <Grid container spacing={3}>
                     <Grid item xs={12}>
                         <Header/>
-                        <DaySlider classes={classes}
-                                   numberOfDays={this.state.numberOfDays}
+                        <DaySlider numberOfDays={this.state.numberOfDays}
                                    onNumberOfDaysChange={this.handleNumberOfDaysChange}/>
-                        <Cards classes={classes} numberOfDays={this.state.numberOfDays}/>
+                        <Cards numberOfDays={this.state.numberOfDays}/>
                     </Grid>
                 </Grid>
             </div>

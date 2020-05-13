@@ -40,7 +40,7 @@ class DayCard extends React.Component {
                         </Button>
                     }
                     {isAddRecipeMode &&
-                        <RecipeForm classes={classes}/>
+                        <RecipeForm />
                     }
                 </CardContent>
             </Card>

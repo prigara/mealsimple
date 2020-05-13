@@ -20,7 +20,7 @@ const Cards = props => {
     return (
         <div className={classes.dayCards}>
             {[...Array(props.numberOfDays)].map((e, i) =>
-                <DayCard classes={classes} key={i} dayNumber={i + 1}/>)}
+                <DayCard key={i} dayNumber={i + 1}/>)}
         </div>
     );
 };
