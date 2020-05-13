@@ -22,13 +22,15 @@ class Cards extends React.Component {
 
     handleDay(day, recipesByDay) {
         let dayPlan = {
-            [day]: recipesByDay
+            [day - 1]: recipesByDay
         }
         this.props.onPlanSave(dayPlan)
     }
 
     render() {
         const {classes} = this.props;
+
+        console.log(this.props.recipesByDays)
 
         return (
             <div className={classes.dayCards}>
@@ -45,7 +47,8 @@ class Cards extends React.Component {
 
 Cards.propTypes = {
     numberOfDays: PropTypes.number,
-    onPlanSave: PropTypes.func
+    onPlanSave: PropTypes.func,
+    recipesByDays: PropTypes.array
 };
 
 export default withStyles(styles, {withTheme: true})(Cards);

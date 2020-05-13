@@ -1,5 +1,7 @@
+import Button from "@material-ui/core/Button";
 import Grid from "@material-ui/core/Grid";
 import {withStyles} from '@material-ui/core/styles';
+import DeleteIcon from "@material-ui/icons/Delete";
 import React from 'react';
 import Cards from "../Cards/Cards";
 import DaySlider from "../DaySlider/DaySlider";
@@ -11,7 +13,10 @@ const styles = theme => ({
         padding: theme.spacing(2),
         textAlign: 'center',
         color: theme.palette.text.secondary,
-    }
+    },
+    clearButton: {
+        margin: theme.spacing(2),
+    },
 });
 
 class App extends React.Component {
@@ -19,12 +24,14 @@ class App extends React.Component {
         super(props);
         this.handleNumberOfDaysChange = this.handleNumberOfDaysChange.bind(this);
         this.handlePlanSave = this.handlePlanSave.bind(this);
+        this.clearMealPlan = this.clearMealPlan.bind(this);
         this.restoredState = JSON.parse(localStorage.getItem(`mealsimple`))
         this.state = {
             numberOfDays:
                 this.restoredState ?
                     this.restoredState.numberOfDays : 3,
-            recipesByDays: []
+            recipesByDays: this.restoredState ?
+                this.restoredState.recipesByDays : []
         };
     }
 
@@ -46,6 +53,14 @@ class App extends React.Component {
         });
     }
 
+    clearMealPlan() {
+        this.setState({
+            recipesByDays: []
+        }, () => {
+            localStorage.setItem(`mealsimple`, JSON.stringify(this.state));
+        });
+    }
+
     render() {
         const {classes} = this.props;
 
@@ -58,7 +73,17 @@ class App extends React.Component {
                                    onNumberOfDaysChange={this.handleNumberOfDaysChange}/>
                         <Cards
                             numberOfDays={this.state.numberOfDays}
-                            onPlanSave={this.handlePlanSave}/>
+                            onPlanSave={this.handlePlanSave}
+                            recipesByDays={this.state.recipesByDays}/>
+
+                        <Button
+                            variant="contained"
+                            color="primary"
+                            className={classes.clearButton}
+                            startIcon={<DeleteIcon/>}
+                            onClick={this.clearMealPlan}>
+                            Clear Meal Plan
+                        </Button>
                     </Grid>
                 </Grid>
             </div>
