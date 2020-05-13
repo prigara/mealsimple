@@ -18,16 +18,23 @@ class App extends React.Component {
     constructor(props) {
         super(props);
         this.handleNumberOfDaysChange = this.handleNumberOfDaysChange.bind(this);
+        this.handlePlanSave = this.handlePlanSave.bind(this);
         this.state = {
             numberOfDays:
                 parseInt(localStorage.getItem(`mealPlannedDays`)) ?
-                    parseInt(localStorage.getItem(`mealPlannedDays`)) : 3
+                    parseInt(localStorage.getItem(`mealPlannedDays`)) : 3,
+            recipesByDays: []
         };
     }
 
     handleNumberOfDaysChange(days) {
         this.setState({numberOfDays: days})
         localStorage.setItem(`mealPlannedDays`, days);
+    }
+
+    handlePlanSave(dayPlan) {
+        let newMealPlan = this.state.recipesByDays.concat(dayPlan);
+        this.setState({recipesByDays: newMealPlan})
     }
 
     render() {
@@ -40,7 +47,9 @@ class App extends React.Component {
                         <Header/>
                         <DaySlider numberOfDays={this.state.numberOfDays}
                                    onNumberOfDaysChange={this.handleNumberOfDaysChange}/>
-                        <Cards numberOfDays={this.state.numberOfDays}/>
+                        <Cards
+                            numberOfDays={this.state.numberOfDays}
+                            onPlanSave={this.handlePlanSave}/>
                     </Grid>
                 </Grid>
             </div>

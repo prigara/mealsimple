@@ -1,9 +1,9 @@
-import {makeStyles} from "@material-ui/core/styles";
+import {withStyles} from "@material-ui/core/styles";
 import PropTypes from 'prop-types';
 import React from "react";
 import DayCard from "../DayCard/DayCard";
 
-const useStyles = makeStyles((theme) => ({
+const styles = theme => ({
     dayCards: {
         display: 'grid',
         gridGap: '10px',
@@ -12,21 +12,40 @@ const useStyles = makeStyles((theme) => ({
     dayCard: {
         maxWidth: '400px'
     }
-}));
+});
 
-const Cards = props => {
-    const classes = useStyles();
+class Cards extends React.Component {
+    constructor(props) {
+        super(props);
+        this.handleDay = this.handleDay.bind(this);
+    }
 
-    return (
-        <div className={classes.dayCards}>
-            {[...Array(props.numberOfDays)].map((e, i) =>
-                <DayCard key={i} dayNumber={i + 1}/>)}
-        </div>
-    );
-};
+    handleDay(day, recipesByDay) {
+        let dayPlan = {
+            [day]: recipesByDay
+        }
+        this.props.onPlanSave(dayPlan)
+    }
+
+    render() {
+        const {classes} = this.props;
+
+        return (
+            <div className={classes.dayCards}>
+                {[...Array(this.props.numberOfDays)].map((e, i) =>
+                    <DayCard
+                        key={i}
+                        dayNumber={i + 1}
+                        onDaySave={this.handleDay}/>
+                    )}
+            </div>
+        );
+    }
+}
 
 Cards.propTypes = {
-    numberOfDays: PropTypes.number
+    numberOfDays: PropTypes.number,
+    onPlanSave: PropTypes.func
 };
 
-export default Cards;
+export default withStyles(styles, {withTheme: true})(Cards);

@@ -17,11 +17,18 @@ class DayCard extends React.Component {
     constructor(props) {
         super(props);
         this.handleAddButtonClick = this.handleAddButtonClick.bind(this);
-        this.state = {addRecipeMode: false}
+        this.handleNewRecipe = this.handleNewRecipe.bind(this);
+        this.state = {
+            addRecipeMode: false
+        }
     }
 
     handleAddButtonClick() {
         this.setState({addRecipeMode: true})
+    }
+
+    handleNewRecipe(recipe) {
+        this.props.onDaySave(this.props.dayNumber, recipe);
     }
 
     render() {
@@ -35,12 +42,12 @@ class DayCard extends React.Component {
                         Day {this.props.dayNumber}
                     </Typography>
                     {!isAddRecipeMode &&
-                        <Button variant="outlined" color="primary" onClick={this.handleAddButtonClick}>
-                            Add Recipe
-                        </Button>
+                    <Button variant="outlined" color="primary" onClick={this.handleAddButtonClick}>
+                        Add Recipe
+                    </Button>
                     }
                     {isAddRecipeMode &&
-                        <RecipeForm currentDayNumber={this.props.dayNumber}/>
+                    <RecipeForm onAddingRecipe={this.handleNewRecipe}/>
                     }
                 </CardContent>
             </Card>
@@ -49,7 +56,8 @@ class DayCard extends React.Component {
 }
 
 DayCard.propTypes = {
-    dayNumber: PropTypes.number
+    dayNumber: PropTypes.number,
+    onDaySave: PropTypes.func
 };
 
 export default withStyles(styles, {withTheme: true})(DayCard);

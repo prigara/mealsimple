@@ -28,15 +28,17 @@ class RecipeForm extends React.Component {
 
     saveRecipe(e) {
         e.preventDefault();
-        let ingredientsListArray = this.recipeIngredients.current.value.split("\n");
+        let ingredientsListArray = (this.recipeIngredients.current.value.length > 0) ?
+            this.recipeIngredients.current.value.split("\n") :
+            []
 
-        let state = {
+        let recipe = {
             recipeName: this.recipeName.current.value,
             recipeURL: this.recipeURL.current.value,
             ingredientsList: ingredientsListArray
         };
 
-        localStorage.setItem(`plannedDay${this.props.currentDayNumber}`, JSON.stringify(state));
+        this.props.onAddingRecipe(recipe);
     }
 
     render() {
@@ -68,7 +70,7 @@ class RecipeForm extends React.Component {
 }
 
 RecipeForm.propTypes = {
-    currentDayNumber: PropTypes.number
+    onAddingRecipe: PropTypes.func
 };
 
 export default withStyles(styles, {withTheme: true})(RecipeForm);
