@@ -18,15 +18,20 @@ class App extends React.Component {
     constructor(props) {
         super(props);
         this.handleNumberOfDaysChange = this.handleNumberOfDaysChange.bind(this);
-        this.state = {numberOfDays: 2};
+        this.state = {
+            numberOfDays:
+                parseInt(localStorage.getItem(`mealPlannedDays`)) ?
+                    parseInt(localStorage.getItem(`mealPlannedDays`)) : 3
+        };
     }
 
     handleNumberOfDaysChange(days) {
         this.setState({numberOfDays: days})
+        localStorage.setItem(`mealPlannedDays`, days);
     }
 
     render() {
-        const { classes } = this.props;
+        const {classes} = this.props;
 
         return (
             <div className={classes.root}>
@@ -43,5 +48,5 @@ class App extends React.Component {
     }
 }
 
-export default withStyles(styles, { withTheme: true })(App);
+export default withStyles(styles, {withTheme: true})(App);
 
