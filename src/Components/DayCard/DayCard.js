@@ -40,7 +40,7 @@ class DayCard extends React.Component {
                         </Button>
                     }
                     {isAddRecipeMode &&
-                        <RecipeForm />
+                        <RecipeForm currentDayNumber={this.props.dayNumber}/>
                     }
                 </CardContent>
             </Card>
