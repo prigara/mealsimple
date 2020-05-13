@@ -19,22 +19,31 @@ class App extends React.Component {
         super(props);
         this.handleNumberOfDaysChange = this.handleNumberOfDaysChange.bind(this);
         this.handlePlanSave = this.handlePlanSave.bind(this);
+        this.restoredState = JSON.parse(localStorage.getItem(`mealsimple`))
         this.state = {
             numberOfDays:
-                parseInt(localStorage.getItem(`mealPlannedDays`)) ?
-                    parseInt(localStorage.getItem(`mealPlannedDays`)) : 3,
+                this.restoredState ?
+                    this.restoredState.numberOfDays : 3,
             recipesByDays: []
         };
     }
 
     handleNumberOfDaysChange(days) {
-        this.setState({numberOfDays: days})
-        localStorage.setItem(`mealPlannedDays`, days);
+        this.setState({
+            numberOfDays: days
+        }, () => {
+            localStorage.setItem(`mealsimple`, JSON.stringify(this.state));
+        });
     }
 
     handlePlanSave(dayPlan) {
         let newMealPlan = this.state.recipesByDays.concat(dayPlan);
-        this.setState({recipesByDays: newMealPlan})
+
+        this.setState({
+            recipesByDays: newMealPlan
+        }, () => {
+            localStorage.setItem(`mealsimple`, JSON.stringify(this.state));
+        });
     }
 
     render() {
