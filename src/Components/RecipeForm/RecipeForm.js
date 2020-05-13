@@ -28,10 +28,12 @@ class RecipeForm extends React.Component {
 
     saveRecipe(e) {
         e.preventDefault();
+        let ingredientsListArray = this.recipeIngredients.current.value.split("\n");
+
         let state = {
             recipeName: this.recipeName.current.value,
             recipeURL: this.recipeURL.current.value,
-            ingredientsList: this.recipeIngredients.current.value
+            ingredientsList: ingredientsListArray
         };
 
         localStorage.setItem(`plannedDay${this.props.currentDayNumber}`, JSON.stringify(state));
