@@ -46,7 +46,7 @@ class App extends React.Component {
     handlePlanUpdate(recipe, action) {
         let newMealPlan = this.state.recipesByDays;
         if (action === 'add') {
-            newMealPlan.concat(recipe);
+            newMealPlan = newMealPlan.concat(recipe);
         }
         if (action === 'delete') {
             newMealPlan = newMealPlan.filter(el => !(el.day === recipe.day && el.recipeURL === recipe.recipeURL))
