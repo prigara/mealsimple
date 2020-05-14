@@ -23,7 +23,7 @@ class App extends React.Component {
     constructor(props) {
         super(props);
         this.handleNumberOfDaysChange = this.handleNumberOfDaysChange.bind(this);
-        this.handlePlanSave = this.handlePlanSave.bind(this);
+        this.handlePlanUpdate = this.handlePlanUpdate.bind(this);
         this.clearMealPlan = this.clearMealPlan.bind(this);
         this.restoredState = JSON.parse(localStorage.getItem(`mealsimple`))
         this.state = {
@@ -43,8 +43,14 @@ class App extends React.Component {
         });
     }
 
-    handlePlanSave(recipe) {
-        let newMealPlan = this.state.recipesByDays.concat(recipe);
+    handlePlanUpdate(recipe, action) {
+        let newMealPlan = this.state.recipesByDays;
+        if (action === 'add') {
+            newMealPlan.concat(recipe);
+        }
+        if (action === 'delete') {
+            newMealPlan = newMealPlan.filter(el => !(el.day === recipe.day && el.recipeURL === recipe.recipeURL))
+        }
 
         this.setState({
             recipesByDays: newMealPlan
@@ -74,7 +80,7 @@ class App extends React.Component {
                                    onNumberOfDaysChange={this.handleNumberOfDaysChange}/>
                         <Cards
                             numberOfDays={this.state.numberOfDays}
-                            onPlanSave={this.handlePlanSave}
+                            onPlanUpdate={this.handlePlanUpdate}
                             recipesByDays={this.state.recipesByDays}/>
 
                         <Button

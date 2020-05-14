@@ -20,8 +20,8 @@ class Cards extends React.Component {
         this.handleDay = this.handleDay.bind(this);
     }
 
-    handleDay(recipe) {
-        this.props.onPlanSave(recipe)
+    handleDay(recipe, action) {
+        this.props.onPlanUpdate(recipe, action)
     }
 
     render() {
@@ -34,7 +34,7 @@ class Cards extends React.Component {
                         key={i}
                         dayNumber={i}
                         recipes={this.props.recipesByDays.filter(el => el.day === i)}
-                        onDaySave={this.handleDay}/>
+                        onManageDayRecipes={this.handleDay}/>
                     )}
             </div>
         );
@@ -43,7 +43,7 @@ class Cards extends React.Component {
 
 Cards.propTypes = {
     numberOfDays: PropTypes.number,
-    onPlanSave: PropTypes.func,
+    onPlanUpdate: PropTypes.func,
     recipesByDays: PropTypes.array
 };
 

@@ -19,6 +19,7 @@ class DayCard extends React.Component {
         super(props);
         this.handleAddButtonClick = this.handleAddButtonClick.bind(this);
         this.handleNewRecipe = this.handleNewRecipe.bind(this);
+        this.handleRemoveRecipe = this.handleRemoveRecipe.bind(this);
         this.state = {
             addRecipeMode: false
         };
@@ -40,8 +41,12 @@ class DayCard extends React.Component {
         this.setState({
             addRecipeMode: false
         }, () => {
-            this.props.onDaySave(recipe);
+            this.props.onManageDayRecipes(recipe,'add');
         });
+    }
+
+    handleRemoveRecipe(recipe) {
+        this.props.onManageDayRecipes(recipe, 'delete');
     }
 
     render() {
@@ -59,7 +64,7 @@ class DayCard extends React.Component {
                     {(!isAddRecipeMode && this.props.recipes.length > 0) &&
                     this.props.recipes.map((recipe) =>
                             <RecipeView key={recipe.recipeName + recipe.recipeURL}
-                                        recipe={recipe} />
+                                        recipe={recipe} onDeletingRecipe={this.handleRemoveRecipe}/>
                         )}
                     {!isAddRecipeMode &&
                     <Button variant="outlined" color="primary" onClick={this.handleAddButtonClick}>
@@ -74,7 +79,7 @@ class DayCard extends React.Component {
 
 DayCard.propTypes = {
     dayNumber: PropTypes.number,
-    onDaySave: PropTypes.func,
+    onManageDayRecipes: PropTypes.func,
     recipes: PropTypes.array
 };
 
