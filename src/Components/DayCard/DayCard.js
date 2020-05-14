@@ -20,8 +20,7 @@ class DayCard extends React.Component {
         this.handleAddButtonClick = this.handleAddButtonClick.bind(this);
         this.handleNewRecipe = this.handleNewRecipe.bind(this);
         this.state = {
-            addRecipeMode: false,
-            recipes: []
+            addRecipeMode: false
         };
     }
 
@@ -36,11 +35,9 @@ class DayCard extends React.Component {
     }
 
     handleNewRecipe(recipe) {
-        let recipeList = this.state.recipes.concat(recipe);
         recipe.day = this.props.dayNumber;
 
         this.setState({
-            recipes: recipeList,
             addRecipeMode: false
         }, () => {
             this.props.onDaySave(recipe);
@@ -59,8 +56,8 @@ class DayCard extends React.Component {
                     {isAddRecipeMode &&
                     <RecipeForm onAddingRecipe={this.handleNewRecipe}/>
                     }
-                    {(!isAddRecipeMode && this.state.recipes.length > 0) &&
-                    this.state.recipes.map((recipe) =>
+                    {(!isAddRecipeMode && this.props.recipes.length > 0) &&
+                    this.props.recipes.map((recipe) =>
                             <RecipeView key={recipe.recipeName + recipe.recipeURL}
                                         recipe={recipe} />
                         )}
