@@ -55,6 +55,7 @@ class App extends React.Component {
 
     clearMealPlan() {
         this.setState({
+            numberOfDays: 2,
             recipesByDays: []
         }, () => {
             localStorage.setItem(`mealsimple`, JSON.stringify(this.state));
