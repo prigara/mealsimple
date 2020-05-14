@@ -6,6 +6,7 @@ import React from 'react';
 import Cards from "../Cards/Cards";
 import DaySlider from "../DaySlider/DaySlider";
 import Header from "../Header/Header";
+import ShoppingList from "../ShoppingList/ShoppingList";
 
 const styles = theme => ({
     root: {
@@ -25,6 +26,7 @@ class App extends React.Component {
         this.handleNumberOfDaysChange = this.handleNumberOfDaysChange.bind(this);
         this.handlePlanUpdate = this.handlePlanUpdate.bind(this);
         this.clearMealPlan = this.clearMealPlan.bind(this);
+        this.createShoppingList = this.createShoppingList.bind(this);
         this.restoredState = JSON.parse(localStorage.getItem(`mealsimple`))
         this.state = {
             numberOfDays:
@@ -68,8 +70,18 @@ class App extends React.Component {
         });
     }
 
+    createShoppingList() {
+        let mealPlan = this.state.recipesByDays;
+        let list = []
+        for (let i = 0; i < mealPlan.length; i++) {
+            list = list.concat(mealPlan[i].ingredientsList)
+        }
+        return list
+    }
+
     render() {
         const {classes} = this.props;
+        const shoppingList = this.createShoppingList();
 
         return (
             <div className={classes.root}>
@@ -91,6 +103,8 @@ class App extends React.Component {
                             onClick={this.clearMealPlan}>
                             Clear Meal Plan
                         </Button>
+
+                        <ShoppingList shoppingItems={shoppingList}/>
                     </Grid>
                 </Grid>
             </div>
