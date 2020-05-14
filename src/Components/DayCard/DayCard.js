@@ -25,6 +25,12 @@ class DayCard extends React.Component {
         };
     }
 
+    componentDidMount() {
+        if (this.props.recipes && this.props.recipes.length > 0) {
+            this.setState({recipes: this.props.recipes})
+        }
+    }
+
     handleAddButtonClick() {
         this.setState({addRecipeMode: true})
     }
@@ -71,7 +77,8 @@ class DayCard extends React.Component {
 
 DayCard.propTypes = {
     dayNumber: PropTypes.number,
-    onDaySave: PropTypes.func
+    onDaySave: PropTypes.func,
+    recipes: PropTypes.array
 };
 
 export default withStyles(styles, {withTheme: true})(DayCard);

@@ -33,6 +33,7 @@ class Cards extends React.Component {
                     <DayCard
                         key={i}
                         dayNumber={i}
+                        recipes={this.props.recipesByDays.filter(el => el.day === i)}
                         onDaySave={this.handleDay}/>
                     )}
             </div>
