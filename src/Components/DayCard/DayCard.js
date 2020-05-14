@@ -6,6 +6,7 @@ import Typography from "@material-ui/core/Typography";
 import PropTypes from 'prop-types';
 import React from "react";
 import RecipeForm from "../RecipeForm/RecipeForm";
+import RecipeView from "../RecipeView/RecipeView";
 
 const styles = theme => ({
     dayCard: {
@@ -19,8 +20,9 @@ class DayCard extends React.Component {
         this.handleAddButtonClick = this.handleAddButtonClick.bind(this);
         this.handleNewRecipe = this.handleNewRecipe.bind(this);
         this.state = {
-            addRecipeMode: false
-        }
+            addRecipeMode: false,
+            recipes: []
+        };
     }
 
     handleAddButtonClick() {
@@ -28,26 +30,38 @@ class DayCard extends React.Component {
     }
 
     handleNewRecipe(recipe) {
-        this.props.onDaySave(this.props.dayNumber, recipe);
+        let recipeList = this.state.recipes.concat(recipe);
+        recipe.day = this.props.dayNumber;
+
+        this.setState({
+            recipes: recipeList,
+            addRecipeMode: false
+        }, () => {
+            this.props.onDaySave(recipe);
+        });
     }
 
     render() {
         const {classes} = this.props;
         const isAddRecipeMode = this.state.addRecipeMode;
-
         return (
-            <Card className={classes.dayCard}>
+            <Card className={classes.dayCard} key={this.props.dayNumber}>
                 <CardContent>
                     <Typography gutterBottom variant="h5" component="h2">
-                        Day {this.props.dayNumber}
+                        Day {this.props.dayNumber + 1}
                     </Typography>
+                    {isAddRecipeMode &&
+                    <RecipeForm onAddingRecipe={this.handleNewRecipe}/>
+                    }
+                    {(!isAddRecipeMode && this.state.recipes.length > 0) &&
+                    this.state.recipes.map((recipe) =>
+                            <RecipeView key={recipe.url}
+                                        recipe={recipe} />
+                        )}
                     {!isAddRecipeMode &&
                     <Button variant="outlined" color="primary" onClick={this.handleAddButtonClick}>
                         Add Recipe
                     </Button>
-                    }
-                    {isAddRecipeMode &&
-                    <RecipeForm onAddingRecipe={this.handleNewRecipe}/>
                     }
                 </CardContent>
             </Card>

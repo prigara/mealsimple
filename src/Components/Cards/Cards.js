@@ -20,24 +20,19 @@ class Cards extends React.Component {
         this.handleDay = this.handleDay.bind(this);
     }
 
-    handleDay(day, recipesByDay) {
-        let dayPlan = {
-            [day - 1]: recipesByDay
-        }
-        this.props.onPlanSave(dayPlan)
+    handleDay(recipe) {
+        this.props.onPlanSave(recipe)
     }
 
     render() {
         const {classes} = this.props;
-
-        console.log(this.props.recipesByDays)
 
         return (
             <div className={classes.dayCards}>
                 {[...Array(this.props.numberOfDays)].map((e, i) =>
                     <DayCard
                         key={i}
-                        dayNumber={i + 1}
+                        dayNumber={i}
                         onDaySave={this.handleDay}/>
                     )}
             </div>

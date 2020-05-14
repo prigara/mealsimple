@@ -23,13 +23,12 @@ class RecipeForm extends React.Component {
 
         this.recipeName = React.createRef();
         this.recipeURL = React.createRef();
-        this.recipeIngredients = React.createRef();
+        this.ingredientsList = React.createRef();
     }
 
-    saveRecipe(e) {
-        e.preventDefault();
-        let ingredientsListArray = (this.recipeIngredients.current.value.length > 0) ?
-            this.recipeIngredients.current.value.split("\n") :
+    saveRecipe() {
+        let ingredientsListArray = (this.ingredientsList.current.value.length > 0) ?
+            this.ingredientsList.current.value.split("\n") :
             []
 
         let recipe = {
@@ -53,7 +52,7 @@ class RecipeForm extends React.Component {
                     label="List of ingredients"
                     placeholder="List of ingredients"
                     multiline
-                    inputRef={this.recipeIngredients}
+                    inputRef={this.ingredientsList}
                 />
                 <Button
                     variant="text"

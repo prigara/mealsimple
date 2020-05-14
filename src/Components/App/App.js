@@ -43,8 +43,8 @@ class App extends React.Component {
         });
     }
 
-    handlePlanSave(dayPlan) {
-        let newMealPlan = this.state.recipesByDays.concat(dayPlan);
+    handlePlanSave(recipe) {
+        let newMealPlan = this.state.recipesByDays.concat(recipe);
 
         this.setState({
             recipesByDays: newMealPlan
