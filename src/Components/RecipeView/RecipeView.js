@@ -9,7 +9,6 @@ class RecipeView extends React.Component {
 
     render() {
         const {recipe} = this.props;
-        // TODO: Fix key
         return (
             <>
                 <CardContent>

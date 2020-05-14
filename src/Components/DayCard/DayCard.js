@@ -55,7 +55,7 @@ class DayCard extends React.Component {
                     }
                     {(!isAddRecipeMode && this.state.recipes.length > 0) &&
                     this.state.recipes.map((recipe) =>
-                            <RecipeView key={recipe.url}
+                            <RecipeView key={recipe.recipeName + recipe.recipeURL}
                                         recipe={recipe} />
                         )}
                     {!isAddRecipeMode &&
