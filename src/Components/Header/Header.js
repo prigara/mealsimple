@@ -13,7 +13,7 @@ const Header = () => {
 
     return (
         <Typography variant="h2" component="h2" className={classes.root}>
-            mealsimple
+            mealsimple – JetBrains hackathon 2020
         </Typography>
     );
 };
